@@ -1,0 +1,1 @@
+Nessa primeira aula (25 de março de 2025), criamos o primeiro projeto Spring Boot.
