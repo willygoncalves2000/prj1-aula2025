@@ -2,6 +2,7 @@ package br.edu.ifmg.produto.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -11,11 +12,15 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+    private Instant updatedAt;
 
     public Category() {
     }
+
+
 
     public Category(Long id, String name) {
         this.id = id;
@@ -36,6 +41,24 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+
+    @PrePersist
+    private void prePersist() {
+        createdAt = Instant.now();
+    }
+    @PreUpdate
+    private void preUpdate() {
+        updatedAt = Instant.now();
     }
 
     @Override
