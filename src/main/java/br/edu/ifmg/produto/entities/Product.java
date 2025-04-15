@@ -19,6 +19,9 @@ public class Product {
     private double price;
     private String imageUrl;
 
+    private Instant createdAt;
+    private Instant updatedAt;
+
     // Relacionamento entre product e category (n para n)
     @ManyToMany
     @JoinTable(name = "tb_product_category",
@@ -35,6 +38,8 @@ public class Product {
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
     }
 
     public Product(Product entity) {
@@ -43,7 +48,8 @@ public class Product {
         this.description = entity.description;
         this.price = entity.price;
         this.imageUrl = entity.imageUrl;
-
+        this.createdAt = entity.createdAt;
+        this.updatedAt = entity.updatedAt;
     }
 
     public Product(Product product, Set<Category> categories) {
@@ -89,6 +95,24 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+
+    @PrePersist
+    private void prePersist() {
+        createdAt = Instant.now();
+    }
+    @PreUpdate
+    private void preUpdate() {
+        updatedAt = Instant.now();
     }
 
     public Set<Category> getCategories() {
