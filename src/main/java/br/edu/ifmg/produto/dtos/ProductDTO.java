@@ -2,18 +2,26 @@ package br.edu.ifmg.produto.dtos;
 
 import br.edu.ifmg.produto.entities.Category;
 import br.edu.ifmg.produto.entities.Product;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class ProductDTO {
+public class ProductDTO extends RepresentationModel<ProductDTO> {
+    @Schema(description = "Database generated ID product")
     private long id;
+    @Schema(description = "Product Name")
     private String name;
+    @Schema(description = "A detailed description of the product")
     private String description;
+    @Schema(description = "Product Price")
     private double price;
+    @Schema(description = "A image url represents this product")
     private String imageUrl;
+    @Schema(description = "Product categories (one or more)")
     private Set<CategoryDTO> categories = new HashSet<>();
 
     public ProductDTO() {
