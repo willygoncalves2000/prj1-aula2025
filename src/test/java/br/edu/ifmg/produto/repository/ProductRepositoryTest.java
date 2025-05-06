@@ -3,6 +3,7 @@ import br.edu.ifmg.produto.entities.Product;
 
 import java.util.Optional;
 
+import br.edu.ifmg.produto.util.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,23 @@ public class ProductRepositoryTest {
     private ProductRepository productRepository;
     
     @Test
-    @DisplayName("Verificando se o objeto não existe no BD depois de deletado")
+    @DisplayName("Verificando se o objeto não existe no BD depois de deletado.")
     public void deleteShouldDeleteObjectWhenIdExists() {
         productRepository.deleteById(1L);
         Optional<Product> obj = productRepository.findById(1L);
         Assertions.assertFalse(obj.isPresent());
+    }
+
+    @Test
+    @DisplayName("Verificando o autoincremento da chave primária.")
+    public void insertShouldPersistWithAutoincrementIdZero() {
+        Product product = Factory.craeteProduct();
+        product.setId(0);
+
+        Product p = productRepository.save(product);
+        Optional<Product> obj = productRepository.findById(p.getId());
+        Assertions.assertTrue(obj.isPresent());
+        Assertions.assertNotEquals(0, obj.get().getId());
+        Assertions.assertEquals(26, obj.get().getId());
     }
 }
