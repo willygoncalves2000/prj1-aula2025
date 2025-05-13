@@ -27,7 +27,7 @@ public class ProductRepositoryTest {
     @Test
     @DisplayName("Verificando o autoincremento da chave primária.")
     public void insertShouldPersistWithAutoincrementIdZero() {
-        Product product = Factory.craeteProduct();
+        Product product = Factory.createProduct();
         product.setId(0);
 
         Product p = productRepository.save(product);
