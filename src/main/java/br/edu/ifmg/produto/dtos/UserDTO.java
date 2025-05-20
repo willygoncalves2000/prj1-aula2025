@@ -13,7 +13,7 @@ public class UserDTO {
 
 
     private Long id;
-    @NotBlank(message = "Campo Obrigatório")
+    @NotBlank(message = "Campo obrigatório")
     private String firstName;
     private String lastName;
 
