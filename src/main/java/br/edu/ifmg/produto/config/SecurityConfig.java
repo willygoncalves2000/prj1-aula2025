@@ -9,10 +9,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig {
-
+/*
     // Metodo de segurança ao se conectar a api, que intervem em todas as requisições para verificar se existe permissão
     @Bean
     @Order(2)
@@ -35,4 +35,6 @@ public class SecurityConfig {
                         headers.frameOptions(frameOptions -> frameOptions.disable()));
         return http.build();
     }
+
+ */
 }
