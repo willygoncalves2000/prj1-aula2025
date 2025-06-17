@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
     public UserDTO insert(UserInsertDTO dto) {
 
         User entity = new User();
-        copyDtoToEntity(dto, entity);
+        copyInsertDtoToEntity(dto, entity);
         // "Criptografa" a senha:
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         User novo = repository.save(entity);
@@ -132,6 +132,17 @@ public class UserService implements UserDetailsService {
 
         entity.getRoles().clear();
         for (RoleDTO role : dto.getRoles()) {
+            Role r = roleRepository.getReferenceById(role.getId());
+            entity.getRoles().add(r);
+        }
+    }
+    private void copyInsertDtoToEntity(UserInsertDTO dto, User entity) {
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setEmail(dto.getEmail());
+
+        entity.getRoles().clear();
+        for (Role role : dto.getRoles()) {
             Role r = roleRepository.getReferenceById(role.getId());
             entity.getRoles().add(r);
         }
