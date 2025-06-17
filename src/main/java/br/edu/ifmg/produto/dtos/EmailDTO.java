@@ -8,19 +8,19 @@ public class EmailDTO {
     @NotBlank
     @Email
     private String to;
-
     @NotBlank
     private String subject;
-
     @NotBlank
     private String body;
 
-    public EmailDTO(){}
 
     public EmailDTO(String to, String subject, String body) {
         this.to = to;
         this.subject = subject;
         this.body = body;
+    }
+
+    public EmailDTO(String token, String email, String subject, String body) {
     }
 
     public String getTo() {
@@ -55,4 +55,6 @@ public class EmailDTO {
                 ", body='" + body + '\'' +
                 '}';
     }
+
+
 }
