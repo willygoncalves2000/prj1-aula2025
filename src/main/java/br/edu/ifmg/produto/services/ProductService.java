@@ -5,6 +5,7 @@ import br.edu.ifmg.produto.dtos.ProductDTO;
 import br.edu.ifmg.produto.dtos.ProductListDTO;
 import br.edu.ifmg.produto.entities.Category;
 import br.edu.ifmg.produto.entities.Product;
+import br.edu.ifmg.produto.projections.ProductProjection;
 import br.edu.ifmg.produto.repository.ProductRepository;
 import br.edu.ifmg.produto.resources.ProductResource;
 import br.edu.ifmg.produto.services.exceptions.DatabaseException;
@@ -13,13 +14,18 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -108,6 +114,13 @@ public class ProductService {
     }
 
     public Page<ProductListDTO> findAllPaged(Pageable pageable, String categoryId, String name) {
-        return null;
+        List<Long> categoriesId=null;
+        if(!categoryId.equals("0")) categoriesId = Arrays.stream(categoryId.split(","))
+                .map(id -> Long.parseLong(id)).toList();
+        Page<ProductProjection> page = productRepository.searchProducts(null, name, pageable);
+        List<ProductListDTO> dtos = page.stream().map(p -> new ProductListDTO(p)).toList();
+        return new PageImpl<>(dtos, pageable, page.getTotalElements());
+
+
     }
 }
