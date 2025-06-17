@@ -117,6 +117,9 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public UserDTO signup(UserInsertDTO dto) {
+        return null;
+    }
 
 
 
